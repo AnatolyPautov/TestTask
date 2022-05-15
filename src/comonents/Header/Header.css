@@ -1,0 +1,27 @@
+.nav_block {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  background-color: white;
+}
+
+.link {
+  text-decoration: none;
+  color: black;
+  margin-right: 50px;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 35px;
+}
+
+.exit {
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  color: black;
+  margin-right: 50px;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 35px;
+}

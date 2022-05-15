@@ -1,0 +1,36 @@
+footer {
+  background: #05276f;
+  padding: 42px 0 16px;
+  color: white;
+}
+
+.wrapper {
+  margin: 0 120px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  font-weight: 300;
+  font-size: 30px;
+  line-height: 35px;
+  margin-bottom: 16px;
+}
+
+.contact {
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 23px;
+  margin-bottom: 16px;
+}
+
+.desc {
+  text-align: center;
+}
+
+.desc a {
+  color: white;
+}

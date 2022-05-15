@@ -1,0 +1,89 @@
+.wrapper {
+  margin: 0 120px;
+}
+
+.conatiner {
+  display: flex;
+  justify-content: space-between;
+}
+
+.subtitle {
+  font-weight: 500;
+  font-size: 50px;
+  line-height: 59px;
+  color: #000000;
+  margin-bottom: 50px;
+}
+
+.info {
+  height: 100%;
+  width: 50%;
+}
+
+.desc-list {
+  font-weight: 300;
+  font-size: 30px;
+  line-height: 35px;
+  color: #000000;
+  margin-bottom: 20px;
+}
+
+.list {
+  background-color: inherit;
+  display: block;
+}
+
+/* TOP START */
+
+.top {
+  padding: 66px 0 36px;
+  background: #05276f;
+}
+.top_title {
+  font-weight: 500;
+  font-size: 80px;
+  line-height: 94px;
+  color: #ff6e00;
+  margin-bottom: 21px;
+}
+
+.top_desc {
+  font-weight: 300;
+  font-size: 40px;
+  line-height: 47px;
+  color: #ffffff;
+  margin-bottom: 46px;
+}
+
+.top_img-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* TOP END */
+
+/* explanation START */
+
+.explanation {
+  background-color: white;
+  padding: 91px 0 53px;
+}
+.explanation_desc {
+  font-size: 30px;
+  line-height: 35px;
+  text-align: center;
+  color: #000000;
+}
+
+/* explanation END */
+
+.block {
+  background: #e5e5e5;
+  padding: 35px 0;
+}
+
+.training {
+  background: white;
+  padding: 60px 0;
+}
