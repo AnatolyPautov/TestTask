@@ -8,7 +8,7 @@ footer {
   margin: 0 120px;
 }
 
-.container {
+.footer_container {
   display: flex;
   justify-content: space-between;
 }

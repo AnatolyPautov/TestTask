@@ -4,7 +4,7 @@ function AppRoutes() {
   return (
     <>
       <UnauthorizedStack />
-      {/* <AuthorizedStack /> */}
+      <AuthorizedStack />
     </>
   );
 }

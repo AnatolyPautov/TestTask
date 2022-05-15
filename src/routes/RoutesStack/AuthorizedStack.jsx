@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
-import Footer from "../../comonents/Footer";
-import Header from "../../comonents/Header";
+import Footer from "../../components/Footer";
+import Header from "../../components/Header";
 import Home from "../../pages/Home";
 
 function AuthorizedStack() {
@@ -16,7 +16,7 @@ function AuthorizedStack() {
           </>
         }
       />
-      <Route path="/training" element={<div />} />
+      <Route path="/training" element={<div>sdfssad1111</div>} />
       <Route path="/account" element={<div />} />
     </Routes>
   );

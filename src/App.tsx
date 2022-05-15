@@ -1,6 +1,5 @@
 import { BrowserRouter } from "react-router-dom";
-import "./App.css";
-import AppRoutes from "./routes/RoutesStack/AuthorizedStack";
+import AppRoutes from "./routes";
 
 const App = () => {
   return (
