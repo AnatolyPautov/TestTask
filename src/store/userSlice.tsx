@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface UserSliceState {
-  token: string;
+  token: string | null;
 }
 
 const initialState: UserSliceState = {
-  token: "",
+  token: null,
 };
 
 const userSlice = createSlice({
@@ -16,11 +16,11 @@ const userSlice = createSlice({
       state.token = payload;
     },
     logOut(state) {
-      state.token = "";
+      state.token = null;
     },
   },
 });
 
-export const { logOut } = userSlice.actions;
+export const { logOut, setToken } = userSlice.actions;
 
 export default userSlice.reducer;

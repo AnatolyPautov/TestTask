@@ -1,7 +1,10 @@
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { logOut } from "../../store/userSlice";
 import "./Header.css";
 
 const Header = () => {
+  const dispatch = useDispatch();
   return (
     <header>
       <nav>
@@ -12,12 +15,14 @@ const Header = () => {
             </Link>
           </li>
           <li>
-            <Link className="link" to="/about">
+            <Link className="link" to="/training">
               Обучение
             </Link>
           </li>
           <li>
-            <button className="exit">Выход</button>
+            <button className="exit" onClick={() => dispatch(logOut())}>
+              Выход
+            </button>
           </li>
         </ul>
       </nav>

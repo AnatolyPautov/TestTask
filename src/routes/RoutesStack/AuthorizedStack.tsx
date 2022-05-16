@@ -1,3 +1,4 @@
+import { Navigate } from "react-router-dom";
 import { Route, Routes } from "react-router-dom";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
@@ -7,7 +8,7 @@ function AuthorizedStack() {
   return (
     <Routes>
       <Route
-        path="/"
+        path="/home"
         element={
           <>
             <Header />
@@ -18,6 +19,7 @@ function AuthorizedStack() {
       />
       <Route path="/training" element={<div>sdfssad1111</div>} />
       <Route path="/account" element={<div />} />
+      <Route path="*" element={<Navigate replace to="/home" />} />
     </Routes>
   );
 }
