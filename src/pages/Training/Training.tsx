@@ -1,21 +1,26 @@
 import "./Training.css";
 import MoreCats from "../../images/more-cats.png";
 import Check from "../../images/check.png";
+import GreenCheck from "../../images/green-check.png";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser, selectVideos } from "../../store/store";
 import { setVideos } from "../../store/videosSlice";
+import { useForm } from "react-hook-form";
 
 const Home = () => {
   const [currentTab, setCurrentTab] = useState(0);
+  const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
 
   const { token } = useSelector(selectUser);
   const { videos } = useSelector(selectVideos);
   const dispatch = useDispatch();
+  const { register, handleSubmit } = useForm<FormData>();
 
   const questionTitle = videos[currentTab]?.questions
     ? videos[currentTab]?.questions[0]?.title
     : "Извините, вопросы кончились -_^";
+  const questionId = videos[currentTab]?.questions[0].id;
 
   const getVideos = async () => {
     const url = "https://safe-waters-66742.herokuapp.com/video";
@@ -37,6 +42,35 @@ const Home = () => {
     } catch (error) {
       console.error("Ошибка:", error);
     }
+  };
+
+  const onSubmit = async ({ answer }: FormData) => {
+    const url = `https://safe-waters-66742.herokuapp.com/question/complete/${questionId}`;
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify({ answer }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const json = await response.json();
+      if (json) {
+        setIsCorrectAnswer(json);
+        alert("Правильно");
+      } else {
+        setIsCorrectAnswer(json);
+        alert("Неверный ответ");
+      }
+    } catch (error) {
+      console.error("Ошибка:", error);
+    }
+  };
+
+  const onSelectTab = (index: number) => {
+    setCurrentTab(index);
+    setIsCorrectAnswer(false);
   };
 
   useEffect(() => {
@@ -61,7 +95,7 @@ const Home = () => {
         <ul>
           {videos.map((item, index) => (
             <li key={item.id}>
-              <button className="tab_item" onClick={() => setCurrentTab(index)}>
+              <button className="tab_item" onClick={() => onSelectTab(index)}>
                 {item.title}
               </button>
             </li>
@@ -80,14 +114,25 @@ const Home = () => {
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             />
           </div>
-          <div className="tests_question">
+
+          <form onSubmit={handleSubmit(onSubmit)} className="tests_question">
             <p className="question_title">{questionTitle}</p>
-            <textarea className="question_textarea" name="text"></textarea>
+            <textarea
+              className="question_textarea"
+              {...register("answer")}
+            ></textarea>
             <div className="question_bottom">
-              <img width={50} height={50} src={Check} alt="disabled check" />
-              <button className="question_button">Проверить</button>
+              <img
+                width={50}
+                height={50}
+                src={isCorrectAnswer ? GreenCheck : Check}
+                alt="disabled check"
+              />
+              <button className="question_button" type="submit">
+                Проверить
+              </button>
             </div>
-          </div>
+          </form>
 
           <div className="question_link-container">
             <a href="/" className="question_link">
@@ -98,6 +143,10 @@ const Home = () => {
       </section>
     </>
   );
+};
+
+type FormData = {
+  answer: string;
 };
 
 export default Home;

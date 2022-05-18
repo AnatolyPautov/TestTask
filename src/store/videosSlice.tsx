@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type Questions = {
-  video: number;
+  id: number;
   title: string;
   answer: string;
 };
