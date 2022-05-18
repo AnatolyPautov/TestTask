@@ -24,7 +24,6 @@ const Registartion = () => {
         },
       });
       const json = await response.json();
-      console.log("Успех:", JSON.stringify(json));
 
       if (json.token) {
         dispatch(setToken(json.token));
