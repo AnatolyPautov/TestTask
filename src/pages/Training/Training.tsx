@@ -15,7 +15,7 @@ const Home = () => {
   const { token } = useSelector(selectUser);
   const { videos } = useSelector(selectVideos);
   const dispatch = useDispatch();
-  const { register, handleSubmit } = useForm<FormData>();
+  const { register, handleSubmit, setValue } = useForm<FormData>();
 
   const questionTitle = videos[currentTab]?.questions
     ? videos[currentTab]?.questions[0]?.title
@@ -71,6 +71,7 @@ const Home = () => {
   const onSelectTab = (index: number) => {
     setCurrentTab(index);
     setIsCorrectAnswer(false);
+    setValue("answer", "");
   };
 
   useEffect(() => {
