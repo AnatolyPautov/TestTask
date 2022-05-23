@@ -4,15 +4,20 @@ import { Link } from "react-router-dom";
 import { setAuth } from "../../store/userSlice";
 import "../Auth.css";
 import Cookies from "js-cookie";
+import { ClipLoader } from "react-spinners";
+import { useState } from "react";
 
 const url = "https://safe-waters-66742.herokuapp.com/auth/login";
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
+
   const { register, handleSubmit } = useForm<FormData>();
 
   const dispatch = useDispatch();
 
   const onSubmit = async ({ login, password }: FormData) => {
+    setLoading(true);
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -35,6 +40,7 @@ const Login = () => {
     } catch (error) {
       console.error("Ошибка:", error);
     }
+    setLoading(false);
   };
 
   return (
@@ -53,7 +59,11 @@ const Login = () => {
           Еще не зарегистрированны?
         </Link>
         <button className="button" type="submit">
-          Начать
+          {loading ? (
+            <ClipLoader color={"#05276f"} loading={loading} size={30} />
+          ) : (
+            "Начать"
+          )}
         </button>
       </div>
     </form>

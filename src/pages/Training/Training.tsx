@@ -8,10 +8,12 @@ import { selectVideos } from "../../store/store";
 import { setVideos } from "../../store/videosSlice";
 import { useForm } from "react-hook-form";
 import Cookies from "js-cookie";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const Home = () => {
   const [currentTab, setCurrentTab] = useState(0);
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const authToken = Cookies.get("auth-token");
 
@@ -48,6 +50,8 @@ const Home = () => {
 
   const onSubmit = async ({ answer }: FormData) => {
     const url = `https://safe-waters-66742.herokuapp.com/question/complete/${questionId}`;
+
+    setLoading(true);
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -58,16 +62,21 @@ const Home = () => {
         },
       });
       const json = await response.json();
-      if (json) {
-        setIsCorrectAnswer(json);
+
+      if (json.message) {
+        setIsCorrectAnswer(false);
+        alert(json.message[0]);
+      } else if (json) {
+        setIsCorrectAnswer(true);
         alert("Правильно");
       } else {
-        setIsCorrectAnswer(json);
+        setIsCorrectAnswer(false);
         alert("Неверный ответ");
       }
     } catch (error) {
       console.error("Ошибка:", error);
     }
+    setLoading(false);
   };
 
   const onSelectTab = (index: number) => {
@@ -131,8 +140,13 @@ const Home = () => {
                 src={isCorrectAnswer ? GreenCheck : Check}
                 alt="disabled check"
               />
+
               <button className="question_button" type="submit">
-                Проверить
+                {loading ? (
+                  <ClipLoader color={"#ff6e00"} loading={loading} size={30} />
+                ) : (
+                  "Проверить"
+                )}
               </button>
             </div>
           </form>
