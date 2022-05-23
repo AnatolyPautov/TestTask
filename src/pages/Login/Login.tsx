@@ -1,8 +1,10 @@
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { setToken } from "../../store/userSlice";
+import { setAuth } from "../../store/userSlice";
 import "../Auth.css";
+import Cookies from "js-cookie";
+
 const url = "https://safe-waters-66742.herokuapp.com/auth/login";
 
 const Login = () => {
@@ -10,25 +12,25 @@ const Login = () => {
 
   const dispatch = useDispatch();
 
-  const onSubmit = async ({ confirmPassword, login, password }: FormData) => {
+  const onSubmit = async ({ login, password }: FormData) => {
     try {
       const response = await fetch(url, {
         method: "POST",
         body: JSON.stringify({
           login,
           password,
-          confirmPassword,
         }),
         headers: {
           "Content-Type": "application/json",
         },
       });
-      const json = await response.json();
+      const { token, message } = await response.json();
 
-      if (json.token) {
-        dispatch(setToken(json.token));
-      } else if (json.message) {
-        alert(json.message);
+      if (token) {
+        Cookies.set("auth-token", token);
+        dispatch(setAuth(true));
+      } else if (message) {
+        alert(message);
       }
     } catch (error) {
       console.error("Ошибка:", error);
@@ -47,12 +49,6 @@ const Login = () => {
           type="password"
           {...register("password")}
         />
-        <input
-          className="input"
-          placeholder="Повторите пароль"
-          type="password"
-          {...register("confirmPassword")}
-        />
         <Link className="auth_link" to="/registartion">
           Еще не зарегистрированны?
         </Link>
@@ -67,7 +63,6 @@ const Login = () => {
 type FormData = {
   login: string;
   password: string;
-  confirmPassword: string;
 };
 
 export default Login;

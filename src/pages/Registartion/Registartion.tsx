@@ -1,7 +1,8 @@
+import Cookies from "js-cookie";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { setToken } from "../../store/userSlice";
+import { setAuth } from "../../store/userSlice";
 import "../Auth.css";
 const url = "https://safe-waters-66742.herokuapp.com/auth/register";
 
@@ -23,12 +24,13 @@ const Registartion = () => {
           "Content-Type": "application/json",
         },
       });
-      const json = await response.json();
+      const { token, message } = await response.json();
 
-      if (json.token) {
-        dispatch(setToken(json.token));
-      } else if (json.message) {
-        alert(json.message);
+      if (token) {
+        Cookies.set("auth-token", token);
+        dispatch(setAuth(true));
+      } else if (message) {
+        alert(message);
       }
     } catch (error) {
       console.error("Ошибка:", error);

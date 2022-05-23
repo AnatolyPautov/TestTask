@@ -1,26 +1,24 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
 
 interface UserSliceState {
-  token: string | null;
+  isAuth: boolean;
 }
 
 const initialState: UserSliceState = {
-  token: null,
+  isAuth: false,
 };
 
 const userSlice = createSlice({
   name: "User",
   initialState,
   reducers: {
-    setToken(state, { payload }: PayloadAction<string>) {
-      state.token = payload;
-    },
-    logOut(state) {
-      state.token = null;
+    setAuth(state, { payload }: PayloadAction<boolean>) {
+      state.isAuth = payload;
     },
   },
 });
 
-export const { logOut, setToken } = userSlice.actions;
+export const { setAuth } = userSlice.actions;
 
 export default userSlice.reducer;

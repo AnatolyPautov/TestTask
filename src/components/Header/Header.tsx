@@ -1,10 +1,17 @@
+import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { logOut } from "../../store/userSlice";
+import { setAuth } from "../../store/userSlice";
 import "./Header.css";
 
 const Header = () => {
   const dispatch = useDispatch();
+
+  const handleLogOut = () => {
+    Cookies.remove("auth-token");
+    dispatch(setAuth(false));
+  };
+
   return (
     <header>
       <nav>
@@ -20,7 +27,7 @@ const Header = () => {
             </Link>
           </li>
           <li>
-            <button className="exit" onClick={() => dispatch(logOut())}>
+            <button className="exit" onClick={handleLogOut}>
               Выход
             </button>
           </li>

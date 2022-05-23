@@ -4,15 +4,17 @@ import Check from "../../images/check.png";
 import GreenCheck from "../../images/green-check.png";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUser, selectVideos } from "../../store/store";
+import { selectVideos } from "../../store/store";
 import { setVideos } from "../../store/videosSlice";
 import { useForm } from "react-hook-form";
+import Cookies from "js-cookie";
 
 const Home = () => {
   const [currentTab, setCurrentTab] = useState(0);
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
 
-  const { token } = useSelector(selectUser);
+  const authToken = Cookies.get("auth-token");
+
   const { videos } = useSelector(selectVideos);
   const dispatch = useDispatch();
   const { register, handleSubmit, setValue } = useForm<FormData>();
@@ -29,7 +31,7 @@ const Home = () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${authToken}`,
         },
       });
       const json = await response.json();
@@ -52,7 +54,7 @@ const Home = () => {
         body: JSON.stringify({ answer }),
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${authToken}`,
         },
       });
       const json = await response.json();

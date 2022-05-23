@@ -9,7 +9,7 @@ function AuthorizedStack() {
   return (
     <Routes>
       <Route
-        path="/home"
+        path="/"
         element={
           <>
             <Header />
@@ -28,7 +28,7 @@ function AuthorizedStack() {
           </>
         }
       />
-      <Route path="*" element={<Navigate replace to="/home" />} />
+      <Route path="*" element={<Navigate replace to="/" />} />
     </Routes>
   );
 }
