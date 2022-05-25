@@ -1,29 +1,26 @@
 import "./Training.css";
 import MoreCats from "../../images/more-cats.png";
-import Check from "../../images/check.png";
-import GreenCheck from "../../images/green-check.png";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectVideos } from "../../store/store";
 import { setVideos } from "../../store/videosSlice";
 import { useForm } from "react-hook-form";
 import Cookies from "js-cookie";
-import ClipLoader from "react-spinners/ClipLoader";
+import Module from "../../components/Module";
+import Tab from "../../components/Tab";
 
 const Home = () => {
   const [currentTab, setCurrentTab] = useState(0);
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const { setValue } = useForm<FormData>();
+
   const authToken = Cookies.get("auth-token");
 
   const { videos } = useSelector(selectVideos);
   const dispatch = useDispatch();
-  const { register, handleSubmit, setValue } = useForm<FormData>();
 
-  const questionTitle = videos[currentTab]?.questions
-    ? videos[currentTab]?.questions[0]?.title
-    : "Извините, вопросы кончились -_^";
   const questionId = videos[currentTab]?.questions[0].id;
 
   const getVideos = async () => {
@@ -102,54 +99,27 @@ const Home = () => {
           </div>
         </div>
       </section>
-
       <section className="tests">
         <ul>
           {videos.map((item, index) => (
             <li key={item.id}>
-              <button className="tab_item" onClick={() => onSelectTab(index)}>
-                {item.title}
-              </button>
+              <Tab
+                item={item}
+                index={index}
+                onClick={() => onSelectTab(index)}
+              />
             </li>
           ))}
         </ul>
-        <div className="tests_content">
-          <div className="tests_video">
-            <iframe
-              width="805"
-              height="400"
-              src={
-                videos[currentTab]?.link ||
-                "https://www.youtube.com/embed/64TCo-9BD_U"
-              }
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            />
-          </div>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="tests_question">
-            <p className="question_title">{questionTitle}</p>
-            <textarea
-              className="question_textarea"
-              {...register("answer")}
-            ></textarea>
-            <div className="question_bottom">
-              <img
-                width={50}
-                height={50}
-                src={isCorrectAnswer ? GreenCheck : Check}
-                alt="disabled check"
-              />
-
-              <button className="question_button" type="submit">
-                {loading ? (
-                  <ClipLoader color={"#ff6e00"} loading={loading} size={30} />
-                ) : (
-                  "Проверить"
-                )}
-              </button>
-            </div>
-          </form>
+        <div className="right_block">
+          <Module
+            videos={videos}
+            currentTab={currentTab}
+            loading={loading}
+            isCorrectAnswer={isCorrectAnswer}
+            onSubmit={onSubmit}
+          />
 
           <div className="question_link-container">
             <a href="/" className="question_link">
@@ -162,7 +132,7 @@ const Home = () => {
   );
 };
 
-type FormData = {
+export type FormData = {
   answer: string;
 };
 

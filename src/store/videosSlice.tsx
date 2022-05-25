@@ -1,16 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Videos } from "../types/types";
 
-type Questions = {
-  id: number;
-  title: string;
-  answer: string;
-};
-type Videos = {
-  id: string;
-  title: string;
-  link: string;
-  questions: Questions[];
-};
 interface VideosSliceState {
   videos: Videos[];
 }

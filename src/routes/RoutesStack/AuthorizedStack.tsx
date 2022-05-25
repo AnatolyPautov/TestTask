@@ -19,7 +19,7 @@ function AuthorizedStack() {
         }
       />
       <Route
-        path="/training"
+        path="/training/:number"
         element={
           <>
             <Header />
