@@ -15,13 +15,17 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
 
   const { setValue } = useForm<FormData>();
-
   const authToken = Cookies.get("auth-token");
-
   const { videos } = useSelector(selectVideos);
   const dispatch = useDispatch();
 
   const questionId = videos[currentTab]?.questions[0].id;
+
+  const onSelectTab = (index: number) => {
+    setCurrentTab(index);
+    setIsCorrectAnswer(false);
+    setValue("answer", "");
+  };
 
   const getVideos = async () => {
     const url = "https://safe-waters-66742.herokuapp.com/video";
@@ -74,12 +78,6 @@ const Home = () => {
       console.error("Ошибка:", error);
     }
     setLoading(false);
-  };
-
-  const onSelectTab = (index: number) => {
-    setCurrentTab(index);
-    setIsCorrectAnswer(false);
-    setValue("answer", "");
   };
 
   useEffect(() => {

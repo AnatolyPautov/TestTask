@@ -11,7 +11,11 @@ interface TabProps {
 
 const Tab: FC<TabProps> = ({ item, onClick, index }) => {
   return (
-    <NavLink to={`/training/${index}`} className="tab_item" onClick={onClick}>
+    <NavLink
+      to={`/training/${index + 1}`}
+      className="tab_item"
+      onClick={onClick}
+    >
       {item.title}
     </NavLink>
   );
